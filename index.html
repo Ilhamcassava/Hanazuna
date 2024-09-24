@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hidden Gems</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Nunito', sans-serif;
+            color: white;
+            overflow-x: hidden;
+        }
+        .background-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 150%;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+        .desktop-video {
+            display: block;
+        }
+        .mobile-video {
+            display: none;
+        }
+        .content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 20px;
+        }
+        @media (max-width: 768px) {
+            .desktop-video {
+                display: none;
+            }
+            .mobile-video {
+                display: block;
+            }
+        }
+
+        #loading-screen {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Menyembunyikan overflow */
+}
+
+#loading-screen video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: -1; 
+    transform: translate(-50%, -50%);
+}
+
+
+    
+        #loading-icon {
+            width: 100px; 
+            height: 100px;
+            animation: spin 2s linear infinite; 
+        }
+
+    
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    
+    <div id="loading-screen">
+        <img id="loading-icon" src="refresh.png" alt="Loading"> <!-- Use the downloaded icon here -->
+    </div>
+
+    <video autoplay loop class="background-video desktop-video">
+        <source src="VID_20240924220027.mp4" type="video/mp4">
+    </video>
+    <video autoplay loop muted class="background-video mobile-video">
+        <source src="Snaptik.app_7112948179351391515.mp4" type="video/mp4">
+    </video>
+
+    <script>
+        
+        window.addEventListener('load', function() {
+            
+            setTimeout(function() {
+                
+                window.location.href = 'welcome.html'; // Ganti dengan URL halaman tujuan
+            }, 7000); 
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slot Machine Gacha</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda+SC:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+    body {
+    background-image: url('astronaut-cat-moon-digital-art-4k-wallpaper-uhdpaper.com-261@0@j.jpg');
+    background-position: center;
+    background-size: cover; /* Memastikan gambar menutupi seluruh area layar */
+    background-repeat: no-repeat; /* Menghindari pengulangan gambar */
+    background-attachment: fixed; /* Memastikan gambar latar belakang tetap di posisi saat scroll */
+    color: #e0e0e0;
+    margin: 0; /* Menghilangkan margin default pada body */
+    padding: 0; /* Menghilangkan padding default pada body */
+    min-height: 100vh; /* Memastikan body setinggi layar perangkat */
+}
+
+
+.slot-machine {
+    width: 100%;
+    max-width: 600px;
+    height: 400px;
+    background: rgba(255, 255, 255, 0.1); /* Latar belakang transparan */
+    border: 10px solid rgba(255, 255, 255, 0.2); /* Border semi-transparan */
+    border-radius: 20px;
+    padding: 20px;
+    margin: 0 auto;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Bayangan untuk efek kedalaman */
+    backdrop-filter: blur(10px); /* Efek blur latar belakang */
+}
+
+.slot-frame {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.slot {
+    width: 30%;
+    height: 120px;
+    background: rgba(0, 0, 0, 0.3); /* Latar belakang semi-transparan */
+    border: 5px solid rgba(255, 255, 255, 0.3); /* Border semi-transparan */
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); /* Bayangan untuk efek kedalaman */
+    backdrop-filter: blur(10px); /* Efek blur latar belakang */
+}
+
+.slot .numbers {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    transition: transform 1s ease-out;
+}
+
+        .number {
+            font-size: 3em;
+            color: #ffd700;
+            /* Gold color */
+            margin: 0;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .controls {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: translateY(0);
+            }
+
+            100% {
+                transform: translateY(-216000px);
+            }
+            /* 1800 numbers * 120px per number */
+        }
+
+        .spin {
+            animation: spin 15s infinite linear;
+        }
+
+        body {
+    margin: 0;
+    font-family: 'Nunito', sans-serif;
+    background-image: url(nasa-space-shuttle-take-off-moon-4k-wallpaper-uhdpaper.com-206@3@a.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: white;
+    overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+    body {
+        background-image: url('nasa-space-shuttle-take-off-moon-4k-wallpaper-uhdpaper.com-206@3@a.jpg'); /* Ganti dengan gambar latar belakang khusus untuk mobile */
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 100vw;    /* Lebar 100% dari lebar layar */
+        height: 100vh;   /* Tinggi 100% dari tinggi layar */
+        object-fit: cover; 
+    }
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    column-gap: 50px;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: transparent; 
+}
+
+#nav {
+    flex: 1; 
+}
+
+
+.logo img {
+    height: 40px;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    padding: 10px 20px;
+    border: 2px solid white;
+    border-radius: 25px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+nav ul li a.active,
+nav ul li a:hover {
+    background-color: rgb(248, 245, 248);
+    text-decoration: none;
+    color: black;
+}
+
+.header-right {
+    display: flex;
+    gap: 20px;
+}
+
+.header-right a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    padding: 10px 20px;
+    border: 2px solid white;
+    border-radius: 25px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.header-right a:hover {
+    background-color: white;
+    color: black;
+}
+
+.menu-icon {
+    display: none;
+    font-size: 24px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.menu-icon.rotate {
+    transform: rotate(90deg);
+}
+
+#sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    background: rgba(255, 255, 255, 0.2); 
+    color: white;
+    backdrop-filter: blur(10px);
+    border-right: 1px solid rgba(255, 255, 255, 0.1); 
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+#sidebar a {
+    padding: 10px 15px;
+    text-decoration: none;
+    font-size: 25px;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+    transition: background-color 0.3s;
+}
+
+#sidebar a img {
+    width: 25px;
+    height: 25px;
+}
+
+#sidebar a:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+#sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    cursor: url('images/video-game.png'), auto;
+}
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .overlay.show {
+            display: block;
+        }
+
+        .table-container {
+    background: rgba(255, 255, 255, 0.1); /* Latar belakang transparan */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Border semi-transparan */
+    border-radius: 10px;
+    backdrop-filter: blur(10px); /* Efek blur latar belakang */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Bayangan untuk efek kedalaman */
+    padding: 20px; /* Padding di sekitar tabel */
+}
+
+.table {
+    color: #e0e0e0; /* Warna teks */
+}
+
+.table thead th {
+    background: rgba(255, 255, 255, 0.2); /* Latar belakang semi-transparan untuk header tabel */
+    color: #e0e0e0; /* Warna teks header tabel */
+}
+
+.table-bordered td,
+.table-bordered th {
+    border-color: rgba(255, 255, 255, 0.2); /* Border semi-transparan */
+}
+
+.glass-table {
+    background: rgba(255, 255, 255, 0.1); /* Latar belakang transparan */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Border semi-transparan */
+    border-radius: 10px;
+    backdrop-filter: blur(8px); /* Efek blur latar belakang */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Bayangan untuk efek kedalaman */
+    color: #e0e0e0; /* Warna teks kontras */
+    font-weight: bold;
+}
+
+.glass-cell {
+    background: rgba(255, 255, 255, 0.2); /* Transparansi lebih tinggi untuk sel */
+    border: 1px solid rgba(255, 255, 255, 0.4); /* Border lebih terang */
+    border-radius: 5px;
+    backdrop-filter: blur(5px); /* Blur lebih ringan */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Bayangan lebih lembut */
+    color: #e0e0e0; /* Warna teks kontras */
+    text-align: center; /* Pusatkan teks di dalam sel */
+    padding: 10px;
+    transition: background 0.3s ease, transform 0.3s ease; /* Transisi untuk efek halus */
+}
+
+.glass-cell:hover {
+    background: rgba(255, 255, 255, 0.3); /* Latar belakang sedikit lebih terang saat hover */
+    transform: scale(1.05); /* Sedikit pembesaran saat hover */
+}
+
+
+
+.glass-cell.new-number {
+    animation: pop-in 0.5s ease-out; /* Animasi saat angka baru muncul */
+}
+    
+
+
+/* Gaya mode gelap */
+body.dark-mode {
+background-image: url(mahito-transfiguration-jujutsu-kaisen-4k-wallpaper-uhdpaper.com-216@2@a.jpg);
+color: #ffffff;
+}
+
+.slot-machine.dark-mode {
+    width: 100%;
+    max-width: 600px;
+    height: 400px;
+    background: rgba(23, 23, 23, 0.514); /* Latar belakang transparan */
+    border: 10px solid rgba(255, 255, 255, 0.2); /* Border semi-transparan */
+    border-radius: 20px;
+    padding: 20px;
+    margin: 0 auto;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* Bayangan untuk efek kedalaman */
+    backdrop-filter: blur(10px); /* Efek blur latar belakang */
+}
+
+.table-container.dark-mode {
+    background: rgba(48, 46, 46, 0.521); /* Latar belakang semi-transparan untuk header tabel */
+    backdrop-filter: blur(8px); /* Efek blur latar belakang */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Bayangan untuk efek kedalaman */
+    color: #e0e0e0; /* Warna teks kontras */
+    font-weight: bold;
+}
+
+.glass-table.dark-mode {
+    background: rgba(255, 255, 255, 0.1); /* Latar belakang transparan */
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Border semi-transparan */
+    border-radius: 10px;
+    backdrop-filter: blur(8px); /* Efek blur latar belakang */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Bayangan untuk efek kedalaman */
+    color: #e0e0e0; /* Warna teks kontras */
+    font-weight: bold;
+}
+
+.glass-cell.dark-mode {
+    background: rgba(255, 255, 255, 0.2); /* Transparansi lebih tinggi untuk sel */
+    border: 1px solid rgba(255, 255, 255, 0.4); /* Border lebih terang */
+    border-radius: 5px;
+    backdrop-filter: blur(5px); /* Blur lebih ringan */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Bayangan lebih lembut */
+    color: #e0e0e0; /* Warna teks kontras */
+    text-align: center; /* Pusatkan teks di dalam sel */
+    padding: 10px;
+    transition: background 0.3s ease, transform 0.3s ease; /* Transisi untuk efek halus */
+}
+
+.glass-cell.dark-mode :hover {
+    background: rgba(255, 255, 255, 0.3); /* Latar belakang sedikit lebih terang saat hover */
+    transform: scale(1.05); /* Sedikit pembesaran saat hover */
+}
+
+.glass-cell.dark-mode.new-number {
+    animation: pop-in 0.5s ease-out; /* Animasi saat angka baru muncul */
+}
+
+
+
+
+.header-right a.dark-mode,
+nav ul li a.dark-mode {
+color: white;
+}
+
+.header-right a.dark-mode:hover,
+nav ul li a.dark-mode:hover {
+background-color: rgba(255, 255, 255, 0.3);
+color: black;
+}
+
+
+@keyframes pop-in {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+
+
+
+        @media screen and (max-width: 768px) {
+            nav {
+                display: none;
+            }
+            .menu-icon {
+                display: block;
+            }
+            .header-right a {
+                display: none;
+            }
+            .header-right a.menu-icon {
+                display: block;
+            }
+            .plants-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .main-title {
+                font-size: 60px;
+            }
+            .subtitle {
+                font-size: 16px;
+            }
+
+            .col-lg-2 {
+                flex: 0 0 50%; /* Mengubah lebar untuk 2 kolom per baris */
+                max-width: 50%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo">
+            <svg class="w-8 text-deep-purple-accent-400" viewBox="0 0 24 24" stroke-linejoin="round" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" stroke="currentColor" fill="none">
+                <rect x="3" y="1" width="7" height="12"></rect>
+                <rect x="3" y="17" width="7" height="6"></rect>
+                <rect x="14" y="1" width="7" height="6"></rect>
+                <rect x="14" y="11" width="7" height="12"></rect>
+            </svg>
+        </div>
+        <nav id="nav">
+            <ul>
+                <li><a href="ichi.html" class="active">インスピレーション</a></li>
+                <li><a href="nii.html">イルハム・</a></li>
+                <li><a href="san.html">リファンディ</a></li>
+            </ul>
+        </nav>
+        <div class="header-right">
+            <a href="gacha.html" class="search-icon">ꕥ</a>
+            <a href="#" class="shop">Messages</a>
+            <a href="welcome.html" class="login">Quite</a>
+            <a href="#" class="menu-icon" id="menu-icon" onclick="toggleMenu()">☰</a>
+        </div>
+    </header>
+
+    <div id="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="toggleMenu()">&times;</a>
+        <a href="games.html"><img src="video-game.png" alt="Contact Icon">Games</a>
+        <a href="#" class="dark-mode-toggle" id="darkModeToggle">
+            <img src="sun.png" alt="Dark Mode" id="darkModeIcon">Games</a>
+        <a href="#" class="toggle-table" onclick="toggleTable()"><img src="gift.png" alt="Contact Icon"> Hidden Table</a>
+        <a href="index.html" class="login"><img src="delete.png" alt="Login Icon">Quite</a>
+    </div>
+    
+
+    <div id="overlay" class="overlay"></div>
+
+    <div class="container mt-5">
+        <div class="slot-machine">
+            <div class="slot-frame">
+                <div class="slot">
+                    <div class="numbers" id="slot1"></div>
+                </div>
+                <div class="slot">
+                    <div class="numbers" id="slot2"></div>
+                </div>
+                <div class="slot">
+                    <div class="numbers" id="slot3"></div>
+                </div>
+            </div>
+        </div>
+        <div class="controls">
+            <button id="gachaButton" class="btn btn-warning">Get Number</button>
+            <button id="resetButton" class="btn btn-info">Reset</button>
+        </div>
+        <div class="table-container mt-4">
+            <table class="table glass-table table-bordered mt-4">
+                <thead>
+                    <tr style="color: black; text-align: center;">
+                        <th scope="col">B</th>
+                        <th scope="col">I</th>
+                        <th scope="col">N</th>
+                        <th scope="col">G</th>
+                        <th scope="col">O</th>
+                    </tr>
+                </thead>
+                <tbody id="numberTable">
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    
+
+    <audio id="spinSound" src="efekspin.mp4" preload="auto"></audio>
+
+    <script>
+    
+    let numbers = Array.from({ length: 75 }, (_, i) => i + 1);
+    let drawnNumbers = [];
+    let isSpinning = false;
+    const spinSound = document.getElementById('spinSound');
+
+    function populateSlots() {
+        const slots = ['slot1', 'slot2', 'slot3'];
+        slots.forEach(slotId => {
+            const slot = document.getElementById(slotId);
+            slot.innerHTML = '';
+            for (let i = 1; i <= 75; i++) {
+                const numberElement = document.createElement('div');
+                numberElement.classList.add('number');
+                numberElement.textContent = i;
+                slot.appendChild(numberElement);
+            }
+            for (let i = 1; i <= 1875; i++) { // 
+                const numberElement = document.createElement('div');
+                numberElement.classList.add('number');
+                numberElement.textContent = (i - 1) % 75 + 1;
+                slot.appendChild(numberElement);
+            }
+        });
+    }
+
+    document.getElementById('gachaButton').addEventListener('click', () => {
+        if (isSpinning) {
+            stopSpinning();
+            isSpinning = false;
+        } else {
+            if (numbers.length === 0) {
+                alert('Semua angka telah ditarik');
+                return;
+            }
+            startSpinning();
+            isSpinning = true;
+            playSound();
+        }
+    });
+
+    document.getElementById('resetButton').addEventListener('click', () => {
+    // Reset kembali array numbers dan drawnNumbers
+    numbers = Array.from({ length: 75 }, (_, i) => i + 1);
+    drawnNumbers = [];
+
+    // Membersihkan tabel
+    const tableBody = document.getElementById('numberTable');
+    while (tableBody.firstChild) {
+        tableBody.removeChild(tableBody.firstChild);
+    }
+
+    // Reset posisi slot ke posisi awal (0)
+    const slots = [document.getElementById('slot1'), document.getElementById('slot2'), document.getElementById('slot3')];
+    slots.forEach(slot => {
+        slot.style.transition = 'none';  // Hapus transisi untuk reset instan
+        slot.style.transform = 'translateY(0)';  // Reset posisi
+        slot.classList.remove('spin');  // Pastikan animasi spin dihentikan
+    });
+
+    populateSlots(); // Mengisi ulang slot angka
+    stopSound(); // Menghentikan suara jika masih berputar
+    isSpinning = false; // Set isSpinning kembali ke false
+});
+
+    function startSpinning() {
+        const slots = [document.getElementById('slot1'), document.getElementById('slot2'), document.getElementById('slot3')];
+        slots.forEach(slot => slot.classList.add('spin'));
+    }
+
+    function stopSpinning() {
+        const slots = [document.getElementById('slot1'), document.getElementById('slot2'), document.getElementById('slot3')];
+        const randomIndex = Math.floor(Math.random() * numbers.length);
+        const drawnNumber = numbers.splice(randomIndex, 1)[0];
+        drawnNumbers.push(drawnNumber);
+
+        slots.forEach(slot => {
+            const numberElements = Array.from(slot.children);
+            const position = numberElements.findIndex(element => parseInt(element.textContent) === drawnNumber);
+
+            if (position >= 0) {
+                const translateY = -(position * 120) + 120;
+                slot.style.transition = 'transform 0.5s ease-out';
+                slot.style.transform = `translateY(${translateY}px)`;
+                slot.classList.remove('spin');
+            }
+        });
+
+        updateTable(drawnNumber);
+        stopSound(); // Hentikan suara setelah mesin berhenti
+    }
+    function updateTable(drawnNumber) {
+    const tableBody = document.getElementById('numberTable');
+    const rowCount = tableBody.rows.length;
+    const columnIndices = { 'B': 0, 'I': 1, 'N': 2, 'G': 3, 'O': 4 };
+
+    let reducedNumber = drawnNumber - 1;
+    let column;
+    if (reducedNumber >= 1 && reducedNumber <= 15) column = 'B';
+    else if (reducedNumber >= 16 && reducedNumber <= 30) column = 'I';
+    else if (reducedNumber >= 31 && reducedNumber <= 45) column = 'N';
+    else if (reducedNumber >= 46 && reducedNumber <= 60) column = 'G';
+    else if (reducedNumber >= 61 && reducedNumber <= 75) column = 'O';
+
+    const columnIndex = columnIndices[column];
+    let row;
+
+    if (rowCount === 0 || tableBody.rows[rowCount - 1].cells[columnIndex].textContent !== '') {
+        row = tableBody.insertRow();
+        for (let i = 0; i < 5; i++) {
+            row.insertCell().classList.add('glass-cell'); // Tambahkan kelas glass-cell pada sel
+        }
+    } else {
+        row = tableBody.rows[rowCount - 1];
+    }
+
+    const cell = row.cells[columnIndex];
+    cell.textContent = reducedNumber;
+    cell.classList.add('new-number');
+
+    // Hapus kelas new-number setelah animasi selesai
+    setTimeout(() => cell.classList.remove('new-number'), 500);
+}
+
+
+let isTableVisible = true;
+
+    function toggleTable() {
+        const tableContainer = document.querySelector('.table-container');
+        isTableVisible = !isTableVisible;
+        tableContainer.style.display = isTableVisible ? 'block' : 'none';
+    }
+
+
+
+
+    function playSound() {
+        spinSound.currentTime = 0; // Putar ulang dari awal
+        spinSound.play();
+    }
+
+    function stopSound() {
+        spinSound.pause();
+        spinSound.currentTime = 0; // Reset posisi audio ke awal
+    }
+
+    populateSlots();
+
+    function toggleMenu() {
+            const sidebar = document.getElementById("sidebar");
+            const menuIcon = document.getElementById("menu-icon");
+            if (sidebar.style.width === "250px") {
+                sidebar.style.width = "0";
+                menuIcon.classList.remove("rotate");
+            } else {
+                sidebar.style.width = "250px";
+                menuIcon.classList.add("rotate");
+            }
+        }
+
+        const darkModeToggle = document.getElementById('darkModeToggle');
+const darkModeIcon = document.getElementById('darkModeIcon');
+
+darkModeToggle.addEventListener('click', function() {
+    if (document.body.classList.contains('dark-mode')) {
+        document.body.classList.remove('dark-mode');
+        document.querySelectorAll('.slot-machine, .table-container, .glass-cell').forEach(el => el.classList.remove('dark-mode'));
+        darkModeIcon.src = 'sun.png'; 
+        localStorage.setItem('darkMode', 'disabled');
+    } else {
+        document.body.classList.add('dark-mode');
+        document.querySelectorAll('.slot-machine, .table-container, .glass-cell').forEach(el => el.classList.add('dark-mode'));
+        darkModeIcon.src = 'moon.png'; 
+        localStorage.setItem('darkMode', 'enabled');
+    }
+});
+
+
+    </script>  
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</body>
+
+</html>
