@@ -537,19 +537,27 @@ color: black;
     }
 
     document.getElementById('gachaButton').addEventListener('click', () => {
-        if (isSpinning) {
-            stopSpinning();
-            isSpinning = false;
-        } else {
-            if (numbers.length === 0) {
-                alert('Semua angka telah ditarik');
-                return;
-            }
-            startSpinning();
-            isSpinning = true;
-            playSound();
+    if (isSpinning) {
+        stopSpinning();
+        isSpinning = false;
+    } else {
+        if (numbers.length === 0) {
+            alert('Semua angka telah ditarik');
+            return;
         }
-    });
+        startSpinning();
+        isSpinning = true;
+        playSound();
+        
+        // Timestop: otomatis berhenti
+        setTimeout(() => {
+            if (isSpinning) {
+                stopSpinning();
+                isSpinning = false;
+            }
+        }, 16000);
+    }
+});
 
     document.getElementById('resetButton').addEventListener('click', () => {
     // Reset kembali array numbers dan drawnNumbers
