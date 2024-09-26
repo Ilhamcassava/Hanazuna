@@ -352,24 +352,24 @@ color: #ffffff;
 }
 
 .glass-cell.dark-mode {
-    background: rgba(255, 255, 255, 0.2); /* Transparansi lebih tinggi untuk sel */
-    border: 1px solid rgba(255, 255, 255, 0.4); /* Border lebih terang */
+    background: rgba(255, 255, 255, 0.2); 
+    border: 1px solid rgba(255, 255, 255, 0.4); 
     border-radius: 5px;
-    backdrop-filter: blur(5px); /* Blur lebih ringan */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Bayangan lebih lembut */
-    color: #e0e0e0; /* Warna teks kontras */
-    text-align: center; /* Pusatkan teks di dalam sel */
+    backdrop-filter: blur(5px); 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    color: #e0e0e0;
+    text-align: center;
     padding: 10px;
-    transition: background 0.3s ease, transform 0.3s ease; /* Transisi untuk efek halus */
+    transition: background 0.3s ease, transform 0.3s ease; 
 }
 
 .glass-cell.dark-mode :hover {
-    background: rgba(255, 255, 255, 0.3); /* Latar belakang sedikit lebih terang saat hover */
-    transform: scale(1.05); /* Sedikit pembesaran saat hover */
+    background: rgba(255, 255, 255, 0.3); 
+    transform: scale(1.05); 
 }
 
 .glass-cell.dark-mode.new-number {
-    animation: pop-in 0.5s ease-out; /* Animasi saat angka baru muncul */
+    animation: pop-in 0.5s ease-out; 
 }
 
 
@@ -401,6 +401,8 @@ color: black;
 
 
 
+
+
         @media screen and (max-width: 768px) {
             nav {
                 display: none;
@@ -426,7 +428,7 @@ color: black;
             }
 
             .col-lg-2 {
-                flex: 0 0 50%; /* Mengubah lebar untuk 2 kolom per baris */
+                flex: 0 0 50%; 
                 max-width: 50%;
             }
         }
@@ -505,13 +507,15 @@ color: black;
         </div>
     </div>
     
-    
 
     <audio id="spinSound" src="efekspin.mp4" preload="auto"></audio>
 
+
+    
+
     <script>
     
-    let numbers = Array.from({ length: 75 }, (_, i) => i + 1);
+    let numbers = Array.from({ length: 76 }, (_, i) => i + 1);
     let drawnNumbers = [];
     let isSpinning = false;
     const spinSound = document.getElementById('spinSound');
@@ -521,25 +525,28 @@ color: black;
         slots.forEach(slotId => {
             const slot = document.getElementById(slotId);
             slot.innerHTML = '';
-            for (let i = 1; i <= 75; i++) {
+            for (let i = 1; i <= 76; i++) {
                 const numberElement = document.createElement('div');
                 numberElement.classList.add('number');
                 numberElement.textContent = i;
                 slot.appendChild(numberElement);
             }
-            for (let i = 1; i <= 1875; i++) { // 
+            for (let i = 1; i <= 1876; i++) { // 
                 const numberElement = document.createElement('div');
                 numberElement.classList.add('number');
-                numberElement.textContent = (i - 1) % 75 + 1;
+                numberElement.textContent = (i - 1) % 76 + 1;
                 slot.appendChild(numberElement);
             }
         });
     }
 
-    document.getElementById('gachaButton').addEventListener('click', () => {
+    let spinTimeout;
+
+document.getElementById('gachaButton').addEventListener('click', () => {
     if (isSpinning) {
         stopSpinning();
         isSpinning = false;
+        clearTimeout(spinTimeout); // Hentikan timeout sebelumnya
     } else {
         if (numbers.length === 0) {
             alert('Semua angka telah ditarik');
@@ -548,39 +555,42 @@ color: black;
         startSpinning();
         isSpinning = true;
         playSound();
-        
-        // Timestop: otomatis berhenti
-        setTimeout(() => {
+
+       
+        clearTimeout(spinTimeout);
+
+       
+        spinTimeout = setTimeout(() => {
             if (isSpinning) {
                 stopSpinning();
                 isSpinning = false;
             }
-        }, 10000);
+        }, 10000); 
     }
 });
 
     document.getElementById('resetButton').addEventListener('click', () => {
-    // Reset kembali array numbers dan drawnNumbers
-    numbers = Array.from({ length: 75 }, (_, i) => i + 1);
+   
+    numbers = Array.from({ length: 76 }, (_, i) => i + 1);
     drawnNumbers = [];
 
-    // Membersihkan tabel
+    
     const tableBody = document.getElementById('numberTable');
     while (tableBody.firstChild) {
         tableBody.removeChild(tableBody.firstChild);
     }
 
-    // Reset posisi slot ke posisi awal (0)
+    
     const slots = [document.getElementById('slot1'), document.getElementById('slot2'), document.getElementById('slot3')];
     slots.forEach(slot => {
-        slot.style.transition = 'none';  // Hapus transisi untuk reset instan
-        slot.style.transform = 'translateY(0)';  // Reset posisi
-        slot.classList.remove('spin');  // Pastikan animasi spin dihentikan
+        slot.style.transition = 'none';  
+        slot.style.transform = 'translateY(0)';  
+        slot.classList.remove('spin');  
     });
 
-    populateSlots(); // Mengisi ulang slot angka
-    stopSound(); // Menghentikan suara jika masih berputar
-    isSpinning = false; // Set isSpinning kembali ke false
+    populateSlots();
+    stopSound(); 
+    isSpinning = false; 
 });
 
     function startSpinning() {
@@ -589,127 +599,34 @@ color: black;
     }
 
     function stopSpinning() {
-        const slots = [document.getElementById('slot1'), document.getElementById('slot2'), document.getElementById('slot3')];
-        const randomIndex = Math.floor(Math.random() * numbers.length);
-        const drawnNumber = numbers.splice(randomIndex, 1)[0];
-        drawnNumbers.push(drawnNumber);
+    const slots = [document.getElementById('slot1'), document.getElementById('slot2'), document.getElementById('slot3')];
 
-        slots.forEach(slot => {
-            const numberElements = Array.from(slot.children);
-            const position = numberElements.findIndex(element => parseInt(element.textContent) === drawnNumber);
-
-            if (position >= 0) {
-                const translateY = -(position * 120) + 120;
-                slot.style.transition = 'transform 0.5s ease-out';
-                slot.style.transform = `translateY(${translateY}px)`;
-                slot.classList.remove('spin');
-            }
-        });
-
-        updateTable(drawnNumber);
-        stopSound(); // Hentikan suara setelah mesin berhenti
-    }
-    function updateTable(drawnNumber) {
-    const tableBody = document.getElementById('numberTable');
-    const rowCount = tableBody.rows.length;
-    const columnIndices = { 'B': 0, 'I': 1, 'N': 2, 'G': 3, 'O': 4 };
-
-    let reducedNumber = drawnNumber - 1;
-    let column;
-    if (reducedNumber >= 1 && reducedNumber <= 15) column = 'B';
-    else if (reducedNumber >= 16 && reducedNumber <= 30) column = 'I';
-<script>
     
-    let numbers = Array.from({ length: 75 }, (_, i) => i + 1);
-    let drawnNumbers = [];
-    let isSpinning = false;
-    const spinSound = document.getElementById('spinSound');
+    const randomIndex = Math.floor(Math.random() * numbers.length);
+    const drawnNumber = numbers.splice(randomIndex, 1)[0];
+    drawnNumbers.push(drawnNumber);
 
-    function populateSlots() {
-        const slots = ['slot1', 'slot2', 'slot3'];
-        slots.forEach(slotId => {
-            const slot = document.getElementById(slotId);
-            slot.innerHTML = '';
-            for (let i = 1; i <= 75; i++) {
-                const numberElement = document.createElement('div');
-                numberElement.classList.add('number');
-                numberElement.textContent = i;
-                slot.appendChild(numberElement);
-            }
-            for (let i = 1; i <= 1875; i++) { // 
-                const numberElement = document.createElement('div');
-                numberElement.classList.add('number');
-                numberElement.textContent = (i - 1) % 75 + 1;
-                slot.appendChild(numberElement);
-            }
-        });
-    }
+    slots.forEach(slot => {
+        const numberElements = Array.from(slot.children);
+        const position = numberElements.findIndex(element => parseInt(element.textContent) === drawnNumber);
 
-    document.getElementById('gachaButton').addEventListener('click', () => {
-        if (isSpinning) {
-            stopSpinning();
-            isSpinning = false;
-        } else {
-            if (numbers.length === 0) {
-                alert('Semua angka telah ditarik');
-                return;
-            }
-            startSpinning();
-            isSpinning = true;
-            playSound();
+        if (position >= 0) {
+            const translateY = -(position * 120) + 120;
+            slot.style.transition = 'transform 0.5s ease-out';
+            slot.style.transform = `translateY(${translateY}px)`;
+            slot.classList.remove('spin');
         }
     });
 
-    document.getElementById('resetButton').addEventListener('click', () => {
-    // Reset kembali array numbers dan drawnNumbers
-    numbers = Array.from({ length: 75 }, (_, i) => i + 1);
-    drawnNumbers = [];
+   
+    updateTable(drawnNumber);
+    stopSound();
 
-    // Membersihkan tabel
-    const tableBody = document.getElementById('numberTable');
-    while (tableBody.firstChild) {
-        tableBody.removeChild(tableBody.firstChild);
+    
+    if (numbers.length === 0) {
+        alert('Semua angka telah ditarik');
     }
-
-    // Reset posisi slot ke posisi awal (0)
-    const slots = [document.getElementById('slot1'), document.getElementById('slot2'), document.getElementById('slot3')];
-    slots.forEach(slot => {
-        slot.style.transition = 'none';  // Hapus transisi untuk reset instan
-        slot.style.transform = 'translateY(0)';  // Reset posisi
-        slot.classList.remove('spin');  // Pastikan animasi spin dihentikan
-    });
-
-    populateSlots(); // Mengisi ulang slot angka
-    stopSound(); // Menghentikan suara jika masih berputar
-    isSpinning = false; // Set isSpinning kembali ke false
-});
-
-    function startSpinning() {
-        const slots = [document.getElementById('slot1'), document.getElementById('slot2'), document.getElementById('slot3')];
-        slots.forEach(slot => slot.classList.add('spin'));
-    }
-
-    function stopSpinning() {
-        const slots = [document.getElementById('slot1'), document.getElementById('slot2'), document.getElementById('slot3')];
-        const randomIndex = Math.floor(Math.random() * numbers.length);
-        const drawnNumber = numbers.splice(randomIndex, 1)[0];
-        drawnNumbers.push(drawnNumber);
-
-        slots.forEach(slot => {
-            const numberElements = Array.from(slot.children);
-            const position = numberElements.findIndex(element => parseInt(element.textContent) === drawnNumber);
-
-            if (position >= 0) {
-                const translateY = -(position * 120) + 120;
-                slot.style.transition = 'transform 0.5s ease-out';
-                slot.style.transform = `translateY(${translateY}px)`;
-                slot.classList.remove('spin');
-            }
-        });
-
-        updateTable(drawnNumber);
-        stopSound(); // Hentikan suara setelah mesin berhenti
-    }
+}
     function updateTable(drawnNumber) {
     const tableBody = document.getElementById('numberTable');
     const rowCount = tableBody.rows.length;
@@ -729,119 +646,7 @@ color: black;
     if (rowCount === 0 || tableBody.rows[rowCount - 1].cells[columnIndex].textContent !== '') {
         row = tableBody.insertRow();
         for (let i = 0; i < 5; i++) {
-            row.insertCell().classList.add('glass-cell'); // Tambahkan kelas glass-cell pada sel
-        }
-    
-    let numbers = Array.from({ length: 75 }, (_, i) => i + 1);
-    let drawnNumbers = [];
-    let isSpinning = false;
-    const spinSound = document.getElementById('spinSound');
-
-    function populateSlots() {
-        const slots = ['slot1', 'slot2', 'slot3'];
-        slots.forEach(slotId => {
-            const slot = document.getElementById(slotId);
-            slot.innerHTML = '';
-            for (let i = 1; i <= 75; i++) {
-                const numberElement = document.createElement('div');
-                numberElement.classList.add('number');
-                numberElement.textContent = i;
-                slot.appendChild(numberElement);
-            }
-            for (let i = 1; i <= 1875; i++) { // 
-                const numberElement = document.createElement('div');
-                numberElement.classList.add('number');
-                numberElement.textContent = (i - 1) % 75 + 1;
-                slot.appendChild(numberElement);
-            }
-        });
-    }
-
-    document.getElementById('gachaButton').addEventListener('click', () => {
-        if (isSpinning) {
-            stopSpinning();
-            isSpinning = false;
-        } else {
-            if (numbers.length === 0) {
-                alert('Semua angka telah ditarik');
-                return;
-            }
-            startSpinning();
-            isSpinning = true;
-            playSound();
-        }
-    });
-
-    document.getElementById('resetButton').addEventListener('click', () => {
-    // Reset kembali array numbers dan drawnNumbers
-    numbers = Array.from({ length: 75 }, (_, i) => i + 1);
-    drawnNumbers = [];
-
-    // Membersihkan tabel
-    const tableBody = document.getElementById('numberTable');
-    while (tableBody.firstChild) {
-        tableBody.removeChild(tableBody.firstChild);
-    }
-
-    // Reset posisi slot ke posisi awal (0)
-    const slots = [document.getElementById('slot1'), document.getElementById('slot2'), document.getElementById('slot3')];
-    slots.forEach(slot => {
-        slot.style.transition = 'none';  // Hapus transisi untuk reset instan
-        slot.style.transform = 'translateY(0)';  // Reset posisi
-        slot.classList.remove('spin');  // Pastikan animasi spin dihentikan
-    });
-
-    populateSlots(); // Mengisi ulang slot angka
-    stopSound(); // Menghentikan suara jika masih berputar
-    isSpinning = false; // Set isSpinning kembali ke false
-});
-
-    function startSpinning() {
-        const slots = [document.getElementById('slot1'), document.getElementById('slot2'), document.getElementById('slot3')];
-        slots.forEach(slot => slot.classList.add('spin'));
-    }
-
-    function stopSpinning() {
-        const slots = [document.getElementById('slot1'), document.getElementById('slot2'), document.getElementById('slot3')];
-        const randomIndex = Math.floor(Math.random() * numbers.length);
-        const drawnNumber = numbers.splice(randomIndex, 1)[0];
-        drawnNumbers.push(drawnNumber);
-
-        slots.forEach(slot => {
-            const numberElements = Array.from(slot.children);
-            const position = numberElements.findIndex(element => parseInt(element.textContent) === drawnNumber);
-
-            if (position >= 0) {
-                const translateY = -(position * 120) + 120;
-                slot.style.transition = 'transform 0.5s ease-out';
-                slot.style.transform = `translateY(${translateY}px)`;
-                slot.classList.remove('spin');
-            }
-        });
-
-        updateTable(drawnNumber);
-        stopSound(); // Hentikan suara setelah mesin berhenti
-    }
-    function updateTable(drawnNumber) {
-    const tableBody = document.getElementById('numberTable');
-    const rowCount = tableBody.rows.length;
-    const columnIndices = { 'B': 0, 'I': 1, 'N': 2, 'G': 3, 'O': 4 };
-
-    let reducedNumber = drawnNumber - 1;
-    let column;
-    if (reducedNumber >= 1 && reducedNumber <= 15) column = 'B';
-    else if (reducedNumber >= 16 && reducedNumber <= 30) column = 'I';
-    else if (reducedNumber >= 31 && reducedNumber <= 45) column = 'N';
-    else if (reducedNumber >= 46 && reducedNumber <= 60) column = 'G';
-    else if (reducedNumber >= 61 && reducedNumber <= 75) column = 'O';
-
-    const columnIndex = columnIndices[column];
-    let row;
-
-    if (rowCount === 0 || tableBody.rows[rowCount - 1].cells[columnIndex].textContent !== '') {
-        row = tableBody.insertRow();
-        for (let i = 0; i < 5; i++) {
-            row.insertCell().classList.add('glass-cell'); // Tambahkan kelas glass-cell pada sel
+            row.insertCell().classList.add('glass-cell'); 
         }
     } else {
         row = tableBody.rows[rowCount - 1];
@@ -851,7 +656,7 @@ color: black;
     cell.textContent = reducedNumber;
     cell.classList.add('new-number');
 
-    // Hapus kelas new-number setelah animasi selesai
+    
     setTimeout(() => cell.classList.remove('new-number'), 500);
 }
 
@@ -868,13 +673,13 @@ let isTableVisible = true;
 
 
     function playSound() {
-        spinSound.currentTime = 0; // Putar ulang dari awal
+        spinSound.currentTime = 0; 
         spinSound.play();
     }
 
     function stopSound() {
         spinSound.pause();
-        spinSound.currentTime = 0; // Reset posisi audio ke awal
+        spinSound.currentTime = 0;
     }
 
     populateSlots();
@@ -910,7 +715,6 @@ darkModeToggle.addEventListener('click', function() {
 
 
     </script>  
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 </body>
